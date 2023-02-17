@@ -18,7 +18,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-package org.apache.airavata.replicacatalog.resource.stubs.storage.common;
+package org.apache.airavata.replicacatalog.resource.stubs.common;
 
 enum StorageType {
     S3 = 0;

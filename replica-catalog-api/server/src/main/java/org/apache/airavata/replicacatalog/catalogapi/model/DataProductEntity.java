@@ -1,4 +1,4 @@
-package org.apache.airavata.replicacatalog.api.model;
+package org.apache.airavata.replicacatalog.catalogapi.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.hypersistence.utils.hibernate.type.json.JsonType;

@@ -15,24 +15,15 @@
  * limitations under the License.
  */
 
+package org.apache.airavata.replicacatalog.sceret.repository;
 
-syntax = "proto3";
+import org.apache.airavata.replicacatalog.sceret.model.S3SecretEntity;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-option java_package = "org.apache.airavata.replicacatalog.catalog.service";
+import java.util.Optional;
 
-import "catalogapi/ReplicaCatalogAPI.proto";
-
-service ReplicaCatalogAPIService {
-
-  rpc registerReplicaLocation(DataReplicaCreateRequest) returns (DataReplicaCreateResponse){}
-
-  rpc updateReplicaLocation(DataReplicaUpdateRequest) returns (DataReplicaUpdateResponse){}
-
-  rpc getReplicaLocation(DataReplicaGetRequest) returns (DataReplicaGetResponse){}
-
-  rpc removeReplicaLocation(DataReplicaDeleteRequest) returns (DataReplicaDeleteResponse){}
-
-  rpc getAllReplicaLocation(AllDataReplicaGetRequest) returns (AllDataReplicaGetResponse){}
-
-  rpc removeAllReplicaLocation(AllDataReplicaDeleteRequest) returns (AllDataReplicaDeleteResponse){}
+@Repository
+public interface S3SecretRepository extends CrudRepository<S3SecretEntity, String> {
+    Optional<S3SecretEntity> findBySecretId(String secretId);
 }
