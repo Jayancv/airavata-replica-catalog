@@ -26,9 +26,10 @@ import org.apache.airavata.replicacatalog.resource.repository.GenericResourceRep
 import org.apache.airavata.replicacatalog.resource.repository.ResolveStorageRepository;
 import org.apache.airavata.replicacatalog.resource.repository.S3StorageRepository;
 import org.apache.airavata.replicacatalog.resource.repository.StorageSecretRepository;
-import org.apache.airavata.replicacatalog.resource.stubs.s3.storage.*;
-import org.apache.airavata.replicacatalog.resource.stubs.storage.common.*;
-import org.apache.airavata.replicacatalog.resource.stubs.storage.common.Error;
+
+import org.apache.airavata.replicacatalog.resource.stubs.common.*;
+import org.apache.airavata.replicacatalog.resource.stubs.common.Error;
+import org.apache.airavata.replicacatalog.resource.stubs.s3.*;
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -18,7 +18,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-package org.apache.airavata.replicacatalog.resource.stubs.s3.storage;
+package org.apache.airavata.replicacatalog.resource.stubs.s3;
 
 message S3Storage {
     string storageId = 1;

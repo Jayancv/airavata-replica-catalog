@@ -1,12 +1,13 @@
-package org.apache.airavata.replicacatalog.api.service;
+package org.apache.airavata.replicacatalog.catalogapi.service;
 
 import io.grpc.stub.StreamObserver;
 
-import org.apache.airavata.replicacatalog.api.mapper.DataProductMapper;
-import org.apache.airavata.replicacatalog.api.model.DataProductEntity;
-import org.apache.airavata.replicacatalog.api.repository.DataProductRepository;
-import org.apache.airavata.replicacatalog.api.stubs.DataProductCreateRequest;
-import org.apache.airavata.replicacatalog.api.stubs.DataProductCreateResponse;
+import org.apache.airavata.replicacatalog.catalog.service.ReplicaCatalogAPIServiceGrpc;
+import org.apache.airavata.replicacatalog.catalog.stubs.DataReplicaCreateRequest;
+import org.apache.airavata.replicacatalog.catalog.stubs.DataReplicaCreateResponse;
+import org.apache.airavata.replicacatalog.catalogapi.mapper.DataProductMapper;
+import org.apache.airavata.replicacatalog.catalogapi.model.DataProductEntity;
+import org.apache.airavata.replicacatalog.catalogapi.repository.DataProductRepository;
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,20 +26,20 @@ public class DataCatalogAPIService extends ReplicaCatalogAPIServiceGrpc.ReplicaC
     DataProductMapper dataProductMapper = new DataProductMapper();
 
     @Override
-    public void createReplicaCDataProduct(DataProductCreateRequest request, StreamObserver<DataProductCreateResponse> responseObserver) {
+    public void registerReplicaLocation(DataReplicaCreateRequest request, StreamObserver<DataReplicaCreateResponse> responseObserver) {
 
         // TODO: SharingManager.resolveUser
-        logger.info("Creating data product {}", request.getDataProduct());
+        logger.info("Creating data product {}", request.getDataReplica());
         DataProductEntity dataProductEntity = new DataProductEntity();
         dataProductEntity.setExternalId(UUID.randomUUID().toString());
-        dataProductMapper.mapModelToEntity(request.getDataProduct(), dataProductEntity);
+        dataProductMapper.mapModelToEntity(request.getDataReplica(), dataProductEntity);
         DataProductEntity savedDataProductEntity = dataProductRepository.save(dataProductEntity);
 
         // TODO: SharingManager.grantPermissionToUser(userInfo, dataProduct,
         // Permission.OWNER)
 
-        DataProductCreateResponse.Builder responseBuilder = DataProductCreateResponse.newBuilder();
-        dataProductMapper.mapEntityToModel(savedDataProductEntity, responseBuilder.getDataProductBuilder());
+        DataReplicaCreateResponse.Builder responseBuilder = DataReplicaCreateResponse.newBuilder();
+        dataProductMapper.mapEntityToModel(savedDataProductEntity, responseBuilder.getDataReplicaBuilder());
         responseObserver.onNext(responseBuilder.build());
         responseObserver.onCompleted();
     }

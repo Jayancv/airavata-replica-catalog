@@ -1,6 +1,6 @@
-package org.apache.airavata.replicacatalog.api.repository;
+package org.apache.airavata.replicacatalog.catalogapi.repository;
 
-import org.apache.airavata.replicacatalog.api.model.DataProductEntity;
+import org.apache.airavata.replicacatalog.catalogapi.model.DataProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -6,11 +6,10 @@ import io.grpc.ManagedChannelBuilder;;
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
-
-import org.apache.airavata.replicacatalog.api.service.ReplicaCatalogAPIServiceGrpc;
-import org.apache.airavata.replicacatalog.api.stubs.DataProduct;
-import org.apache.airavata.replicacatalog.api.stubs.DataProductCreateRequest;
-import org.apache.airavata.replicacatalog.api.stubs.DataProductCreateResponse;
+import org.apache.airavata.replicacatalog.catalog.service.ReplicaCatalogAPIServiceGrpc;
+import org.apache.airavata.replicacatalog.catalog.stubs.DataReplicaCreateRequest;
+import org.apache.airavata.replicacatalog.catalog.stubs.DataReplicaCreateResponse;
+import org.apache.airavata.replicacatalog.catalog.stubs.DataReplicaLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +22,10 @@ public class ReplicaCatalogAPIClient {
         blockingStub = ReplicaCatalogAPIServiceGrpc.newBlockingStub(channel);
     }
 
-    public DataProduct createDataProduct(DataProduct dataProduct) {
-        DataProductCreateRequest request = DataProductCreateRequest.newBuilder().setDataProduct(dataProduct).build();
-        DataProductCreateResponse response = blockingStub.createReplicaCDataProduct(request);
-        return response.getDataProduct();
+    public DataReplicaLocation createReplicaCDataProduct(DataReplicaLocation dataProduct) {
+        DataReplicaCreateRequest request = DataReplicaCreateRequest.newBuilder().setDataReplica(dataProduct).build();
+        DataReplicaCreateResponse response = blockingStub.registerReplicaLocation(request);
+        return response.getDataReplica();
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -35,14 +34,14 @@ public class ReplicaCatalogAPIClient {
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
         try {
             ReplicaCatalogAPIClient client = new ReplicaCatalogAPIClient(channel);
-            DataProduct parentDataProduct = DataProduct.newBuilder().setName("parent dp").build();
-            DataProduct parentResult = client.createDataProduct(parentDataProduct);
+            DataReplicaLocation parentDataProduct = DataReplicaLocation.newBuilder().setReplicaName("parent dp").build();
+            DataReplicaLocation parentResult = client.createReplicaCDataProduct(parentDataProduct);
 
-            DataProduct dataProduct = DataProduct.newBuilder().setName("testing").setMetadata("{\"foo\": \"bar\"}")
-                    .setParentDataProductId(parentResult.getDataProductId())
+            DataReplicaLocation dataProduct = DataReplicaLocation.newBuilder().setReplicaName("testing").putMetadata("foo","bar")
+                    .setParentDataProductId(parentResult.getParentDataProductId())
                     .build();
-            DataProduct result = client.createDataProduct(dataProduct);
-            System.out.println(MessageFormat.format("Created data product with id [{0}]", result.getDataProductId()));
+            DataReplicaLocation result = client.createReplicaCDataProduct(dataProduct);
+            System.out.println(MessageFormat.format("Created data product with id [{0}]", result.getDataReplicaId()));
 
         } finally {
             channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);

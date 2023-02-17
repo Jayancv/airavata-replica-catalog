@@ -18,7 +18,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "org.apache.airavata.replicacatalog.api.stubs";
+option java_package = "org.apache.airavata.replicacatalog.catalog.stubs";
 
 message UserInfo {
   /*
@@ -31,7 +31,7 @@ message UserInfo {
    * identifies the tenant in whatever tenant management scheme data catalog
    * is integrated with.
    */
-  optional string tenant_id = 2;
+  string tenant_id = 2;
 }
 
 message GroupInfo {
@@ -45,7 +45,7 @@ message GroupInfo {
    * identifies the tenant in whatever tenant management scheme data catalog
    * is integrated with.
    */
-  optional string tenant_id = 2;
+  string tenant_id = 2;
 }
 
 enum Permission {
@@ -57,34 +57,81 @@ enum Permission {
   MANAGE_SHARING = 5;
 }
 
-message DataProduct {
-  string data_product_id = 1;
-  optional string parent_data_product_id = 2;
-  string name = 3;
-  optional string metadata = 4;
+enum ReplicaLocationCategory  {
+  GATEWAY_DATA_STORE = 0;
+  COMPUTE_RESOURCE = 1;
+  LONG_TERM_STORAGE_RESOURCE = 2;
+  OTHER = 3;
 }
 
-message DataProductCreateRequest {
-  DataProduct data_product = 1;
+enum StorageType {
+  LOCAL = 0;
+  S3 = 1;
+  GCS = 2;
+  AZURE = 3;
+
 }
-message DataProductCreateResponse {
-  DataProduct data_product = 1;
+
+
+message DataReplicaLocation {
+  string data_replica_id = 1;
+  string parent_data_product_id = 2;
+  string replica_name = 3;
+  string replica_description = 4;
+  int64 creation_time = 5;
+  int64 last_modified_time = 6;
+  int64 valid_until_time = 7;
+  ReplicaLocationCategory category = 8;
+  StorageType storage_type = 9;
+  map<string, string> metadata = 10;
 }
-message DataProductUpdateRequest {
-  DataProduct data_product = 1;
+
+message DataReplicaCreateRequest {
+  DataReplicaLocation data_replica = 1;
 }
-message DataProductUpdateResponse {
-  DataProduct data_product = 1;
+message DataReplicaCreateResponse{
+  DataReplicaLocation data_replica = 1;
 }
-message DataProductGetRequest {
-  string data_product_id = 1;
+
+message DataReplicaUpdateRequest {
+  DataReplicaLocation data_replica = 1;
 }
-message DataProductGetResponse {
-  DataProduct data_product = 1;
+message DataReplicaUpdateResponse{
+  DataReplicaLocation data_replica = 1;
 }
-message DataProductDeleteRequest {
-  string data_product_id = 1;
+message DataReplicaGetRequest {
+  string data_replica_id = 1;
 }
-message DataProductDeleteResponse {
+message DataReplicaGetResponse {
+  DataReplicaLocation data_replica = 1;
+}
+message DataReplicaDeleteRequest {
+  string data_replica_id = 1;
+}
+message DataReplicaDeleteResponse {
+}
+
+message AllDataReplicaGetRequest {
+  string parent_data_product_id = 1;
+  int32 page_number = 2;
+  int32 page_size = 3;
+}
+
+message AllDataReplicaGetResponse {
+  repeated ReplicaListEntry storage_list = 1;
+}
+
+message ReplicaListEntry {
+  string data_replica_id = 1;
+  string replica_name = 2;
+  StorageType storage_type = 3;
+}
+
+message AllDataReplicaDeleteRequest {
+  string parent_data_product_id = 1;
+}
+
+message AllDataReplicaDeleteResponse{
+  int32 replica_location_count = 1;
 }
 

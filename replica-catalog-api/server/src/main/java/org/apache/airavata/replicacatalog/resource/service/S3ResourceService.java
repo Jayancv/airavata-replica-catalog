@@ -4,8 +4,8 @@ import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 import org.apache.airavata.replicacatalog.resource.service.s3.S3StorageServiceGrpc;
-import org.apache.airavata.replicacatalog.resource.stubs.s3.storage.S3Storage;
-import org.apache.airavata.replicacatalog.resource.stubs.s3.storage.S3StorageCreateRequest;
+import org.apache.airavata.replicacatalog.resource.stubs.s3.S3Storage;
+import org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageCreateRequest;
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
