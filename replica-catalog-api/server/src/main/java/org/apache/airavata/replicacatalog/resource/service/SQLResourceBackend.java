@@ -105,7 +105,7 @@ public class SQLResourceBackend implements ResourceBackend {
     public StorageListResponse searchStorages(StorageSearchRequest request) throws Exception {
         StorageListResponse.Builder resp = StorageListResponse.newBuilder();
         switch (request.getSearchQueryCase()) {
-            case STORAGEID:
+            case STORAGE_ID:
                 Optional<ResolveStorageEntity> storageOp = resolveStorageRepository.getByStorageId(request.getStorageId());
                 if (storageOp.isPresent()) {
                     StorageListEntry.Builder entry = StorageListEntry.newBuilder();
@@ -115,7 +115,7 @@ public class SQLResourceBackend implements ResourceBackend {
                     resp.addStorageList(entry);
                 }
                 break;
-            case STORAGENAME:
+            case STORAGE_NAME:
                 List<ResolveStorageEntity> storages = resolveStorageRepository.getByStorageName(request.getStorageName());
                 storages.forEach(st -> {
                     StorageListEntry.Builder entry = StorageListEntry.newBuilder();
@@ -125,7 +125,7 @@ public class SQLResourceBackend implements ResourceBackend {
                     resp.addStorageList(entry);
                 });
                 break;
-            case STORAGETYPE:
+            case STORAGE_TYPE:
                 storages = resolveStorageRepository.getByStorageType(ResolveStorageEntity.StorageType.valueOf(request.getStorageType().name()));
                 storages.forEach(st -> {
                     StorageListEntry.Builder entry = StorageListEntry.newBuilder();
