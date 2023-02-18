@@ -76,14 +76,15 @@ enum StorageType {
 message DataReplicaLocation {
   string data_replica_id = 1;
   string parent_data_product_id = 2;
-  string replica_name = 3;
-  string replica_description = 4;
-  int64 creation_time = 5;
-  int64 last_modified_time = 6;
-  int64 valid_until_time = 7;
-  ReplicaLocationCategory category = 8;
-  StorageType storage_type = 9;
-  map<string, string> metadata = 10;
+  string storage_resource_id = 3;
+  string replica_name = 4;
+  string replica_description = 5;
+  int64 creation_time = 6;
+  int64 last_modified_time = 7;
+  int64 valid_until_time = 8;
+  ReplicaLocationCategory category = 9;
+  StorageType storage_type = 10;
+  map<string, string> metadata = 11;
 }
 
 message DataReplicaCreateRequest {

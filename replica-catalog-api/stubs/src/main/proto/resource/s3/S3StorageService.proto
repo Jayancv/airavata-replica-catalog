@@ -25,19 +25,19 @@ import "resource/s3/S3Storage.proto";
 service S3StorageService {
 
     rpc createS3Storage (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageCreateRequest) returns
-        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3Storage);
+                                        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3Storage);
 
     rpc updateS3Storage (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageUpdateRequest) returns
-        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageUpdateResponse);
+                                        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageUpdateResponse);
 
     rpc deleteS3Storage (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageDeleteRequest) returns
-        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageDeleteResponse);
+                                        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageDeleteResponse);
 
     rpc getS3Storage (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageGetRequest) returns
-        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3Storage);
+                                        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3Storage);
 
     rpc listS3Storage (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageListRequest) returns
-        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageListResponse);
+                                        (org.apache.airavata.replicacatalog.resource.stubs.s3.S3StorageListResponse);
 
 
 

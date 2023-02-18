@@ -17,6 +17,8 @@
 
 package org.apache.airavata.replicacatalog.sceret.service;
 
+import org.apache.airavata.replicacatalog.secret.stubs.common.*;
+
 import java.util.Optional;
 
 public interface SecretBackend {
@@ -24,6 +26,11 @@ public interface SecretBackend {
     public void init();
     public void destroy();
 
+    public StorageSecret getSecretForStorage(SecretGetRequest request) throws Exception;
+    public StorageSecret registerSecretForStorage(StorageSecret request) throws Exception;
+    public boolean deleteSecretForStorage(SecretDeleteRequest request) throws Exception;
+    public SecretListResponse searchStorages(SecretSearchRequest request) throws Exception;
+    public SecretListResponse listStorage(SecretListRequest request) throws Exception;
 
     public Optional<org.apache.airavata.replicacatalog.secret.stubs.s3.S3Secret> getS3Secret(org.apache.airavata.replicacatalog.secret.stubs.s3.S3SecretGetRequest request) throws Exception;
     public org.apache.airavata.replicacatalog.secret.stubs.s3.S3Secret createS3Secret(org.apache.airavata.replicacatalog.secret.stubs.s3.S3SecretCreateRequest request) throws Exception;
