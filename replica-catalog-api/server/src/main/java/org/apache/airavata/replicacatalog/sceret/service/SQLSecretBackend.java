@@ -19,6 +19,7 @@ package org.apache.airavata.replicacatalog.sceret.service;
 
 import org.apache.airavata.replicacatalog.sceret.model.S3SecretEntity;
 import org.apache.airavata.replicacatalog.sceret.repository.S3SecretRepository;
+import org.apache.airavata.replicacatalog.secret.stubs.common.*;
 import org.apache.airavata.replicacatalog.secret.stubs.s3.*;
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
@@ -48,6 +49,31 @@ public class SQLSecretBackend implements SecretBackend {
     @Override
     public void destroy() {
         logger.info("Destroying database secret backend");
+    }
+
+    @Override
+    public StorageSecret getSecretForStorage(SecretGetRequest request) throws Exception {
+        return null;
+    }
+
+    @Override
+    public StorageSecret registerSecretForStorage(StorageSecret request) throws Exception {
+        return null;
+    }
+
+    @Override
+    public boolean deleteSecretForStorage(SecretDeleteRequest request) throws Exception {
+        return false;
+    }
+
+    @Override
+    public SecretListResponse searchStorages(SecretSearchRequest request) throws Exception {
+        return null;
+    }
+
+    @Override
+    public SecretListResponse listStorage(SecretListRequest request) throws Exception {
+        return null;
     }
 
 

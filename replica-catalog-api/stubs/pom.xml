@@ -61,6 +61,29 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--  Plugin for Proto 3 API document generation. First need to install https://github.com/pseudomuto/protoc-gen-doc/releases to the machine  -->
+<!--            <plugin>-->
+<!--                <groupId>org.xolstice.maven.plugins</groupId>-->
+<!--                <artifactId>protobuf-maven-plugin</artifactId>-->
+<!--                <version>0.6.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>compile</goal>-->
+<!--                            <goal>test-compile</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <protocArtifact>com.google.protobuf:protoc:3.17.3:exe:${os.detected.classifier}</protocArtifact>-->
+<!--                    <pluginId>protoc-gen-doc</pluginId>-->
+<!--                    <pluginArtifact>org.pseudomuto:protoc-gen-doc:1.5.0:exe:${os.detected.classifier}</pluginArtifact>-->
+<!--&lt;!&ndash;                    <pluginParameters>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <param>mode=html</param>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <param>include_imports</param>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </pluginParameters>&ndash;&gt;-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

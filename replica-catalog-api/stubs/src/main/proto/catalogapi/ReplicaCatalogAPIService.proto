@@ -24,15 +24,33 @@ import "catalogapi/ReplicaCatalogAPI.proto";
 
 service ReplicaCatalogAPIService {
 
+  /*
+   * Register a new replica to the Replica Catalog
+   */
   rpc registerReplicaLocation(DataReplicaCreateRequest) returns (DataReplicaCreateResponse){}
 
+  /*
+   * Update existing replica details in the ReplicaCatalog
+   */
   rpc updateReplicaLocation(DataReplicaUpdateRequest) returns (DataReplicaUpdateResponse){}
 
+  /*
+   * Retrieving existing replica details in the ReplicaCatalog
+   */
   rpc getReplicaLocation(DataReplicaGetRequest) returns (DataReplicaGetResponse){}
 
+  /*
+   * Removing a replica in the ReplicaCatalog
+   */
   rpc removeReplicaLocation(DataReplicaDeleteRequest) returns (DataReplicaDeleteResponse){}
 
+  /*
+   * Retrieving all the existing replica details for a selected product data in the ReplicaCatalog
+   */
   rpc getAllReplicaLocation(AllDataReplicaGetRequest) returns (AllDataReplicaGetResponse){}
 
+  /*
+   * Remove all the existing replicas for a selected product data in the ReplicaCatalog
+   */
   rpc removeAllReplicaLocation(AllDataReplicaDeleteRequest) returns (AllDataReplicaDeleteResponse){}
 }
