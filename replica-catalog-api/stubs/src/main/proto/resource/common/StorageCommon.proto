@@ -94,6 +94,9 @@ message StorageSearchRequest {
     }
 }
 
+/*
+ * Replica storage entry related services
+ */
 service StorageCommonService {
     rpc resolveStorageType (StorageTypeResolveRequest) returns (StorageTypeResolveResponse);
 
