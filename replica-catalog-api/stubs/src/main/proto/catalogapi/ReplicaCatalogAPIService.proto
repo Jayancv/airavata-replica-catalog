@@ -53,4 +53,27 @@ service ReplicaCatalogAPIService {
    * Remove all the existing replicas for a selected product data in the ReplicaCatalog
    */
   rpc removeAllReplicaLocation(AllDataReplicaDeleteRequest) returns (AllDataReplicaDeleteResponse){}
+
+
+  /*
+ * Register a new data product to the Replica Catalog
+ */
+  rpc registerDataProduct(DataProductCreateRequest) returns (DataProductCreateResponse){}
+
+  /*
+   * Update existing Data Product details in the ReplicaCatalog
+   */
+  rpc updateDataProduct(DataProductUpdateRequest) returns (DataProductUpdateResponse){}
+
+  /*
+   * Retrieving existing Data Product details in the ReplicaCatalog
+   */
+  rpc getDataProduct(DataProductGetRequest) returns (DataProductGetResponse){}
+
+  /*
+   * Removing a Data Product in the ReplicaCatalog
+   */
+  rpc removeDataProduct(DataProductDeleteRequest) returns (DataProductDeleteResponse){}
+
+
 }

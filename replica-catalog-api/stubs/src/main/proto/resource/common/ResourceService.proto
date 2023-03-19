@@ -1,0 +1,106 @@
+///*
+// * Licensed to the Apache Software Foundation (ASF) under one or more
+// * contributor license agreements.  See the NOTICE file distributed with
+// * this work for additional information regarding copyright ownership.
+// * The ASF licenses this file to You under the Apache License, Version 2.0
+// * (the "License"); you may not use this file except in compliance with
+// * the License.  You may obtain a copy of the License at
+// *
+// *     http://www.apache.org/licenses/LICENSE-2.0
+// *
+// * Unless required by applicable law or agreed to in writing, software
+// * distributed under the License is distributed on an "AS IS" BASIS,
+// * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// * See the License for the specific language governing permissions and
+// * limitations under the License.
+// */
+//
+//syntax = "proto3";
+//
+//option java_multiple_files = true;
+//package org.apache.airavata.replicacatalog.resource.stubs.common;
+//
+//import "resource/s3/S3Storage.proto";
+//
+//message FileResource {
+//    string resourcePath = 1;
+//}
+//
+//message DirectoryResource {
+//    string resourcePath = 1;
+//}
+//
+//message GenericResource {
+//
+//    string resourceId = 1;
+//
+//    oneof resource {
+//        org.apache.airavata.replicacatalog.resource.stubs.common.FileResource file = 2;
+//        org.apache.airavata.replicacatalog.resource.stubs.common.DirectoryResource directory = 3;
+//    }
+//
+//    StorageWrapper storage =4;
+//
+//}
+//
+//message StorageWrapper {
+//    oneof storage {
+//        org.apache.airavata.replicacatalog.resource.stubs.s3.S3Storage s3Storage = 1;
+//    }
+//}
+//
+//message GenericResourceGetRequest {
+//    string resourceId = 1;
+//}
+//
+//message GenericResourceCreateRequest {
+//    string storageId = 1;
+//    GenericResource resource = 2;
+//    enum StorageType {
+//        S3 = 0;
+//        SCP = 1;
+//        FTP = 2;
+//        LOCAL = 3;
+//        BOX = 4;
+//        DROPBOX = 5;
+//        GCS = 6;
+//        AZURE = 7;
+//        SWIFT = 8;
+//        ODATA = 9;
+//    }
+//
+//    StorageType storageType = 3;
+//}
+//
+//message GenericResourceUpdateRequest {
+//    string resourceId = 1;
+//    string storageId = 2;
+//    oneof resource {
+//        org.apache.airavata.replicacatalog.resource.stubs.common.FileResource file = 3;
+//        org.apache.airavata.replicacatalog.resource.stubs.common.DirectoryResource directory = 4;
+//    }
+//}
+//
+//message GenericResourceUpdateResponse {
+//    string resourceId = 1;
+//}
+//
+//message GenericResourceDeleteRequest {
+//    string resourceId = 1;
+//}
+//
+//message GenericResourceDeleteResponse {
+//    bool status = 1;
+//}
+//
+//service GenericResourceService {
+//    rpc getGenericResource (GenericResourceGetRequest) returns
+//    (org.apache.airavata.replicacatalog.resource.stubs.common.GenericResource);
+//
+//    rpc createGenericResource (GenericResourceCreateRequest) returns
+//    (org.apache.airavata.replicacatalog.resource.stubs.common.GenericResource);
+//
+//    rpc updateGenericResource (GenericResourceUpdateRequest) returns (GenericResourceUpdateResponse);
+//
+//    rpc deleteGenericResource (GenericResourceDeleteRequest) returns (GenericResourceDeleteResponse);
+//}

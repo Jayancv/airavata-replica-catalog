@@ -57,13 +57,6 @@ enum Permission {
   MANAGE_SHARING = 5;
 }
 
-enum ReplicaLocationCategory  {
-  GATEWAY_DATA_STORE = 0;
-  COMPUTE_RESOURCE = 1;
-  LONG_TERM_STORAGE_RESOURCE = 2;
-  OTHER = 3;
-}
-
 enum StorageType {
   LOCAL = 0;
   S3 = 1;
@@ -72,19 +65,23 @@ enum StorageType {
 
 }
 
+enum DataProductType {
+  FILE = 0;
+  COLLECTION = 1;
+}
+
 // Entity which used to model a replica entry
 message DataReplicaLocation {
   string data_replica_id = 1;             // Unique replica id
-  string parent_data_product_id = 2;
+  string data_product_id = 2;
   string storage_resource_id = 3;         // Replica storage id (TO link the storage entry)
   string replica_name = 4;                // Replica user friendly name
   string replica_description = 5;         // Replica description
   int64 creation_time = 6;                // Replica creation date and time
   int64 last_modified_time = 7;           // Last modified time of replica
   int64 valid_until_time = 8;             // Validity time of the replica
-  ReplicaLocationCategory category = 9;   // Replica location classification based on the Resource generation
-  StorageType storage_type = 10;          // Storage type of the replica
-  map<string, string> metadata = 11;      // Replica's metadata information
+  StorageType storage_type = 9;          // Storage type of the replica
+  map<string, string> metadata = 10;      // Replica's metadata information
 }
 
 message DataReplicaCreateRequest {
@@ -93,6 +90,14 @@ message DataReplicaCreateRequest {
 message DataReplicaCreateResponse{
   DataReplicaLocation data_replica = 1;
 }
+
+message DataReplicaGroupEntryCreateRequest {
+  ReplicaGroupEntry data_replica_group = 1;
+}
+message DataReplicaGroupEntryCreateResponse{
+  ReplicaGroupEntry data_replica_group = 1;
+}
+
 
 message DataReplicaUpdateRequest {
   DataReplicaLocation data_replica = 1;
@@ -113,13 +118,21 @@ message DataReplicaDeleteResponse {
 }
 
 message AllDataReplicaGetRequest {
-  string parent_data_product_id = 1;
+  string data_product_id = 1;
   int32 page_number = 2;
   int32 page_size = 3;
 }
 
 message AllDataReplicaGetResponse {
-  repeated ReplicaListEntry storage_list = 1;
+  string data_product_id = 1;
+  repeated ReplicaGroupEntry replica_list = 2;
+}
+
+message ReplicaGroupEntry {
+  string replica_group_id = 1;
+  string data_replica_id = 2;
+  repeated ReplicaGroupEntry directories = 3;
+  repeated DataReplicaLocation files = 4;
 }
 
 message ReplicaListEntry {
@@ -129,10 +142,54 @@ message ReplicaListEntry {
 }
 
 message AllDataReplicaDeleteRequest {
-  string parent_data_product_id = 1;
+  string data_product_id = 1;
 }
 
 message AllDataReplicaDeleteResponse{
   int32 replica_location_count = 1;
 }
+
+
+// Entity which used to model a DataProduct entry
+message DataProduct{
+  string product_uri = 1;                 // Unique id
+  string parent_product_uri = 2;          //
+  string product_name = 3;                // Product user friendly name
+  string product_description = 4;         // Product description
+  int64 creation_time = 5;                // Product creation date and time
+  int64 last_modified_time = 6;           // Last modified time of replica
+  int64 valid_until_time = 7;             // Validity time of the replica
+  DataProductType data_product_type = 8;          // Product type of the DataProduct
+  map<string, string> metadata = 9;               // Product metadata information
+  repeated DataReplicaLocation replica_locations = 10; //Link to replicas
+
+}
+
+message DataProductCreateRequest {
+  DataProduct data_product = 1;
+}
+message DataProductCreateResponse{
+  DataProduct data_product = 1;
+}
+
+message DataProductUpdateRequest {
+  DataProduct data_product = 1;
+}
+message DataProductUpdateResponse{
+  DataProduct data_product = 1;
+}
+
+message DataProductGetRequest {
+  string data_product_uri = 1;
+}
+message DataProductGetResponse {
+  DataProduct data_product = 1;
+}
+
+message DataProductDeleteRequest {
+  string data_product_uri = 1;
+}
+message DataProductDeleteResponse {
+}
+
 

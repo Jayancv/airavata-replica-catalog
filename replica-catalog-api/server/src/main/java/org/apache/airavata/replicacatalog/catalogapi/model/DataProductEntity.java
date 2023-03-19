@@ -1,99 +1,163 @@
+/*
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ *
+*/
 package org.apache.airavata.replicacatalog.catalogapi.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import io.hypersistence.utils.hibernate.type.json.JsonType;
-import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 
+import jakarta.persistence.*;
+import org.apache.airavata.replicacatalog.catalog.stubs.DataProductType;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * The persistent class for the data_product database table.
+ */
 @Entity
-@Table(name = "data_product", uniqueConstraints = { @UniqueConstraint(columnNames = { "external_id" }) })
-public class DataProductEntity {
+@Table(name = "DATA_PRODUCT")
+public class DataProductEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "data_product_data_product_id_seq", sequenceName = "data_product_data_product_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "data_product_data_product_id_seq")
-    @Column(name = "data_product_id")
-    private Long dataProductId;
+    @Column(name = "PRODUCT_URI")
+    private String productUri;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "parent_data_product_id", referencedColumnName = "data_product_id", nullable = true)
-    private DataProductEntity parentDataProductEntity;
+    @Column(name = "PRODUCT_NAME")
+    private String productName;
 
-    @Basic
-    @Column(name = "external_id", nullable = false)
-    private String externalId;
+    @Column(name = "PRODUCT_DESCRIPTION")
+    private String productDescription;
 
-    @Basic
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "OWNER_NAME")
+    private String ownerName;
 
-    @Type(JsonType.class)
-    @Column(name = "metadata", columnDefinition = "jsonb")
-    private JsonNode metadata;
+    @Column(name = "PARENT_PRODUCT_URI")
+    private String parentProductUri;
 
-    // TODO: ManyToOne mapping to owner: UserEntity
-    public Long getDataProductId() {
-        return dataProductId;
+    @Column(name = "PRODUCT_SIZE")
+    private int productSize;
+
+    @Column(name = "CREATION_TIME")
+    private Timestamp creationTime;
+
+    @Column(name = "LAST_MODIFIED_TIME")
+    private Timestamp lastModifiedTime;
+
+    @Column(name = "PRODUCT_TYPE")
+    @Enumerated(EnumType.STRING)
+    private DataProductType dataProductType;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="DATA_PRODUCT_METADATA", joinColumns = @JoinColumn(name="PRODUCT_URI"))
+    @MapKeyColumn(name = "METADATA_KEY")
+    @Column(name = "METADATA_VALUE")
+    private Map<String, String> productMetadata;
+
+    @OneToMany(targetEntity = DataReplicaLocationEntity.class, cascade = CascadeType.ALL,
+            mappedBy = "dataProduct", fetch = FetchType.EAGER)
+    private List<DataReplicaLocationEntity> replicaLocations;
+
+    public String getProductUri() {
+        return productUri;
     }
 
-    public void setDataProductId(Long dataProductId) {
-        this.dataProductId = dataProductId;
+    public void setProductUri(String productUri) {
+        this.productUri = productUri;
     }
 
-    public DataProductEntity getParentDataProductEntity() {
-        return parentDataProductEntity;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setParentDataProductEntity(DataProductEntity parentDataProductEntity) {
-        this.parentDataProductEntity = parentDataProductEntity;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getExternalId() {
-        return externalId;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
-    public String getName() {
-        return name;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
-    public JsonNode getMetadata() {
-        return metadata;
+    public String getParentProductUri() {
+        return parentProductUri;
     }
 
-    public void setMetadata(JsonNode metadata) {
-        this.metadata = metadata;
+    public void setParentProductUri(String parentProductUri) {
+        this.parentProductUri = parentProductUri;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((dataProductId == null) ? 0 : dataProductId.hashCode());
-        return result;
+    public int getProductSize() {
+        return productSize;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        DataProductEntity other = (DataProductEntity) obj;
-        if (dataProductId == null) {
-            if (other.dataProductId != null)
-                return false;
-        } else if (!dataProductId.equals(other.dataProductId))
-            return false;
-        return true;
+    public void setProductSize(int productSize) {
+        this.productSize = productSize;
     }
+
+    public Timestamp getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Timestamp creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public Timestamp getLastModifiedTime() {
+        return lastModifiedTime;
+    }
+
+    public void setLastModifiedTime(Timestamp lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
+    }
+
+    public DataProductType getDataProductType() {
+        return dataProductType;
+    }
+
+    public void setDataProductType(DataProductType dataProductType) {
+        this.dataProductType = dataProductType;
+    }
+
+    public Map<String, String> getProductMetadata() { return productMetadata; }
+
+    public void setProductMetadata(Map<String, String> productMetadata) { this.productMetadata = productMetadata; }
+
+    public List<DataReplicaLocationEntity> getReplicaLocations() {
+        return replicaLocations;
+    }
+
+    public void setReplicaLocations(List<DataReplicaLocationEntity> replicaLocations) {
+        this.replicaLocations = replicaLocations;
+    }
+
 }

@@ -20,6 +20,9 @@ syntax = "proto3";
 option java_multiple_files = true;
 package org.apache.airavata.replicacatalog.resource.stubs.common;
 
+import "resource/s3/S3Storage.proto";
+
+
 enum StorageType {
     S3 = 0;
     SCP = 1;
@@ -94,6 +97,65 @@ message StorageSearchRequest {
     }
 }
 
+
+message FileResource {
+    string resourcePath = 1;
+}
+
+message DirectoryResource {
+    string resourcePath = 1;
+}
+
+message GenericResource {
+
+    string resourceId = 1;
+
+    oneof resource {
+        org.apache.airavata.replicacatalog.resource.stubs.common.FileResource file = 2;
+        org.apache.airavata.replicacatalog.resource.stubs.common.DirectoryResource directory = 3;
+    }
+
+    StorageWrapper storage =4;
+
+}
+
+message StorageWrapper {
+    oneof storage {
+        org.apache.airavata.replicacatalog.resource.stubs.s3.S3Storage s3Storage = 1;
+    }
+}
+
+message GenericResourceGetRequest {
+    string resourceId = 1;
+}
+
+message GenericResourceCreateRequest {
+    string storageId = 1;
+    GenericResource resource = 2;
+    StorageType storageType = 3;
+}
+
+message GenericResourceUpdateRequest {
+    string resourceId = 1;
+    string storageId = 2;
+    oneof resource {
+        org.apache.airavata.replicacatalog.resource.stubs.common.FileResource file = 3;
+        org.apache.airavata.replicacatalog.resource.stubs.common.DirectoryResource directory = 4;
+    }
+}
+
+message GenericResourceUpdateResponse {
+    string resourceId = 1;
+}
+
+message GenericResourceDeleteRequest {
+    string resourceId = 1;
+}
+
+message GenericResourceDeleteResponse {
+    bool status = 1;
+}
+
 /*
  * Replica storage entry related services
  */
@@ -109,4 +171,15 @@ service StorageCommonService {
     rpc searchStorages(StorageSearchRequest) returns (StorageListResponse);
 
     rpc listStorages(StorageListRequest) returns (StorageListResponse);
+
+/*****************************/
+    rpc getGenericResource (GenericResourceGetRequest) returns
+        (org.apache.airavata.replicacatalog.resource.stubs.common.GenericResource);
+
+    rpc createGenericResource (GenericResourceCreateRequest) returns
+        (org.apache.airavata.replicacatalog.resource.stubs.common.GenericResource);
+
+    rpc updateGenericResource (GenericResourceUpdateRequest) returns (GenericResourceUpdateResponse);
+
+    rpc deleteGenericResource (GenericResourceDeleteRequest) returns (GenericResourceDeleteResponse);
 }

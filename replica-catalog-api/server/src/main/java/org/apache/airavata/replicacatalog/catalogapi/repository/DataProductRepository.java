@@ -4,11 +4,12 @@ import org.apache.airavata.replicacatalog.catalogapi.model.DataProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface DataProductRepository extends JpaRepository<DataProductEntity, Long> {
+@Transactional(readOnly = true)
+public interface DataProductRepository extends JpaRepository<DataProductEntity, String> {
 
-    DataProductEntity findByExternalId(String externalId);
+    DataProductEntity findByProductUri(String productUri);
 
     @Transactional
-    void deleteByExternalId(String externalId);
+    void deleteByProductUri(String productUri);
 
 }
